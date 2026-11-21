@@ -15,7 +15,7 @@ import {
   FiCheckCircle,
 } from "react-icons/fi";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api";
+const API_BASE = import.meta.env.API_BASE || "http://localhost:8000/api";
 const MAIN_ADMIN_API = `${API_BASE}/main-admin`;
 export const MAIN_ADMIN_SESSION_KEY = "logicguard_main_admin_session";
 

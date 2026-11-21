@@ -13,7 +13,7 @@ import {
   FiRefreshCw,
 } from "react-icons/fi";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api";
+const API_BASE = import.meta.env.API_BASE || "http://localhost:8000/api";
 const ADMIN_API = `${API_BASE}/admin`;
 export const ADMIN_SESSION_KEY = "logicguard_admin_session";
 
