@@ -11,6 +11,30 @@ export default function EvaluatorPortal({ evaluator, onLogout, onBack }) {
   const [suggestedCode, setSuggestedCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
+  const [polishing, setPolishing] = useState(false);
+
+const handlePolishSuggestion = async () => {
+  if (!notes.trim() || polishing) return;
+  setPolishing(true);
+  try {
+    const { data } = await axios.post(`${API_BASE}/reviews/polish-suggestion`, {
+      rawNotes: notes,
+      problemTitle: selectedTicket?.problemTitle || "",
+      code: selectedTicket?.code || "",
+      suggestedCode:
+        suggestedCode !== selectedTicket?.code ? suggestedCode : "",
+    });
+    if (data?.polishedNotes) {
+      setNotes(data.polishedNotes);
+    }
+  } catch (err) {
+    const msg = err.response?.data?.error || err.message;
+    alert(`Polish failed: ${msg}`);
+  } finally {
+    setPolishing(false);
+  }
+};
+
   const selectTicket = (t) => {
     setSelectedTicket(t);
     setNotes(t.evaluatorNotes || "");
@@ -247,6 +271,15 @@ export default function EvaluatorPortal({ evaluator, onLogout, onBack }) {
                   >
                     ✓ Approve & Accept Solution
                   </button>
+
+                  <button
+  type="button"
+  onClick={handlePolishSuggestion}
+  disabled={polishing || !notes.trim()}
+  className="px-3 py-1 text-[11px] font-bold rounded-lg bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white cursor-pointer"
+>
+  {polishing ? "Polishing..." : " Polish with LLM"}
+</button>
                 </div>
               </div>
             </>
