@@ -9,7 +9,7 @@ import { ReviewTicket } from "./models.js";
 
 const execAsync = promisify(execFile);
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const CONFIDENCE_GAP_THRESHOLD = 25;
+const CONFIDENCE_GAP_THRESHOLD = 2;
 
 async function runCmd(cmd, args, options = {}) {
   try {

@@ -7,6 +7,8 @@ import adminRoutes from "./routes/admin.js";
 import mainAdminRoutes from "./routes/mainAdmin.js";
 import User from "./models/User.js";
 import analyzeRoutes from "./routes/analyze.js";
+import reviewsRouter from "./routes/reviews.js";
+
 
 dotenv.config();
 
@@ -22,6 +24,9 @@ app.use(
   })
 );
 app.use(express.json({ limit: "2mb" }));
+
+// ...baaki routes ke paas:
+app.use("/api/reviews", reviewsRouter);
 
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true, dbConnected: mongoose.connection.readyState === 1 });
