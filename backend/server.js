@@ -15,8 +15,23 @@ const PORT = process.env.PORT || 8000;
 const MONGO_URI =
   process.env.MONGO_URI || "mongodb://127.0.0.1:27017/logicguard";
 
-app.use(cors());
-app.use(express.json());
+const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  })
+);
+app.use(express.json({ limit: "2mb" }));
 
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true, dbConnected: mongoose.connection.readyState === 1 });
@@ -57,7 +72,7 @@ async function startServer() {
     await mongoose.connect(MONGO_URI);
     await ensureSingleMainAdmin();
     app.listen(PORT, () => {
-      console.log(`LogicGuard backend running on http://localhost:${PORT}`);
+      console.log(`LogicGuard backend running on port ${PORT}`);
     });
   } catch (err) {
     console.error("Failed to start server:", err.message);
