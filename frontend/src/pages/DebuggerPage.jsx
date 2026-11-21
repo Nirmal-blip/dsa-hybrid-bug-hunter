@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Editor, { DiffEditor } from "@monaco-editor/react";
 import axios from "axios";
 
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api";
 const STUDENT_SESSION_KEY = "logicguard_student_auth";
 
 const normalizeCode = (s = "") => s.replace(/\s+/g, " ").trim();
