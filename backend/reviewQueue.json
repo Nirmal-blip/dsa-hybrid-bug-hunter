@@ -1,0 +1,90 @@
+[
+  {
+    "ticketId": "REV-MWNQ1X7C",
+    "createdAt": "2026-11-19T15:45:26.616Z",
+    "status": "REJECTED",
+    "problemId": "arr-pascal-1",
+    "problemTitle": "Pascal's Triangle I (Element at R, C)",
+    "problem": "Pascal's Triangle I: Given 1-based row R and column C, return the element at position (R, C) in Pascal's Triangle.",
+    "code": "class Solution {\npublic:\n    long long pascalElement(int r, int c) {\n        // Write your code here\n        \n    }\n};",
+    "staticWarnings": "solution.cpp:3:33: warning: unused parameter 'r' [-Wunused-parameter]\n    3 |     long long pascalElement(int r, int c) {\n      |                                 ^\nsolution.cpp:3:40: warning: unused parameter 'c' [-Wunused-parameter]\n    3 |     long long pascalElement(int r, int c) {\n      |                                        ^\nsolution.cpp:6:5: warning: non-void function does not return a value [-Wreturn-type]\n    6 |     }\n      |     ^\n3 warnings generated.",
+    "bugs": [
+      {
+        "id": "bug-1",
+        "title": "Missing implementation of Pascal element",
+        "category": "algorithm",
+        "startLine": 4,
+        "endLine": 6,
+        "explanation": "The function pascalElement does not compute the required binomial coefficient and does not return any value, leading to undefined behavior and incorrect results for all inputs.",
+        "suggestedFix": "class Solution {\npublic:\n    long long pascalElement(int r, int c) {\n        // (r-1 choose c-1)\n        int n = r - 1;\n        int k = c - 1;\n        if (k < 0 || k > n) return 0;\n        if (k > n - k) k = n - k;\n        long long res = 1;\n        for (int i = 1; i <= k; ++i) {\n            res = res * (n - k + i) / i;\n        }\n        return res;\n    }\n};",
+        "counterexampleInput": "5 3",
+        "expectedOutput": "6",
+        "status": "CONFIRMED",
+        "evidence": "Failed counterexample \"5 3\" -> Expected \"6\", got \"0\""
+      }
+    ],
+    "testResults": [
+      {
+        "name": "Sample Test #1",
+        "bugId": null,
+        "input": "5 3",
+        "expected": "6",
+        "actual": "0",
+        "stderr": "",
+        "passed": false,
+        "tle": false
+      },
+      {
+        "name": "Edge Case #1: Top of triangle",
+        "bugId": null,
+        "input": "1 1",
+        "expected": "1",
+        "actual": "0",
+        "stderr": "",
+        "passed": false,
+        "tle": false
+      },
+      {
+        "name": "Edge Case #2: Edge element",
+        "bugId": null,
+        "input": "10 1",
+        "expected": "1",
+        "actual": "0",
+        "stderr": "",
+        "passed": false,
+        "tle": false
+      },
+      {
+        "name": "Edge Case #3: Middle large",
+        "bugId": null,
+        "input": "50 25",
+        "expected": "63205303218876",
+        "actual": "0",
+        "stderr": "",
+        "passed": false,
+        "tle": false
+      },
+      {
+        "name": "AI Counterexample: Missing implementation of Pascal element",
+        "bugId": "bug-1",
+        "input": "5 3",
+        "expected": "6",
+        "actual": "0",
+        "stderr": "",
+        "passed": false,
+        "tle": false
+      }
+    ],
+    "dualAudit": {
+      "primaryConfidence": 95,
+      "verifierConfidence": 90,
+      "verifierNotes": "The provided implementation correctly computes the binomial coefficient (r-1 choose c-1) using an efficient multiplicative approach, handling edge cases and avoiding overflow for typical input ranges.",
+      "confidenceDiff": 5,
+      "threshold": 2,
+      "needsHumanReview": true
+    },
+    "evaluatorNotes": "hello world write ko\n",
+    "reviewedBy": "Senior C++ Evaluator",
+    "reviewedAt": "2026-11-19T15:47:13.420Z"
+  }
+]
